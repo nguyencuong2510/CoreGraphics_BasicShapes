@@ -12,12 +12,34 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        let squarePath = UIBezierPath()
+        squarePath.move(to: CGPoint(x: 100, y: 100))
+        
+        squarePath.addLine(to: CGPoint(x: 200, y: 100))
+        squarePath.addLine(to: CGPoint(x: 200, y: 200))
+        squarePath.addLine(to: CGPoint(x: 100, y: 200))
+        squarePath.close()
+        
+        let square = CAShapeLayer()
+        square.path = squarePath.cgPath
+        square.fillColor = UIColor.red.cgColor
+        
+        self.view.layer.addSublayer(square)
+        
+        let circle = CAShapeLayer()
+        circle.path = circlePathWithCenter(center: CGPoint(x: 200, y: 400), radius: 50).cgPath
+        circle.fillColor = UIColor.green.cgColor
+        self.view.layer.addSublayer(circle)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func circlePathWithCenter(center: CGPoint, radius: CGFloat) -> UIBezierPath {
+        let circlePath = UIBezierPath()
+        circlePath.addArc(withCenter: center, radius: radius, startAngle: -CGFloat(M_PI), endAngle: -CGFloat(M_PI/2), clockwise: true)
+        circlePath.addArc(withCenter: center, radius: radius, startAngle: -CGFloat(M_PI/2), endAngle: 0, clockwise: true)
+        circlePath.addArc(withCenter: center, radius: radius, startAngle: 0, endAngle: CGFloat(M_PI/2), clockwise: true)
+        circlePath.addArc(withCenter: center, radius: radius, startAngle: CGFloat(M_PI/2), endAngle: CGFloat(M_PI), clockwise: true)
+
+        return circlePath
     }
 
 
